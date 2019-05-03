@@ -7,7 +7,6 @@ public class CarController : MonoBehaviour
 	public float carSpeed;
 	public float maxPos = 2.10f;
 
-
 	Vector3 position;
 	public UIManager ui;
     // Start is called before the first frame update
@@ -19,16 +18,36 @@ public class CarController : MonoBehaviour
 		position = transform.position;
     }
 
+    float direction = -1;
+    bool active = true;
     // Update is called once per frame
     void Update()
     {
+        if (active)
+        {
+            direction = -1;
+        } else
+        {
+            direction = 1;
+        }
+        position = transform.position;
+        bool down = Input.GetKey("space");
         //Increase the value of the position related to the keys
-		position.x += Input.GetAxis("Horizontal") * carSpeed * Time.deltaTime;
+        //position.x += Input.GetAxis("Horizontal") * carSpeed * Time.deltaTime;
 
-		//Limit the value of x (boundaries)
-		position.x = Mathf.Clamp(position.x, -2.1f, 2.1f);
+        position.x += direction * carSpeed * Time.deltaTime;
+
+        //Limit the value of x (boundaries)
+        position.x = Mathf.Clamp(position.x, -2.1f, 2.1f);
 
 		transform.position = position;
+        if (down)
+        {
+            active = false;
+        } else
+        {
+            active = true;
+        }
     
 	}
 
